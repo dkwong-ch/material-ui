@@ -1,10 +1,10 @@
-let React = require('react');
-let Router = require('react-router');
-let { MenuItem, LeftNav, Mixins, Styles } = require('material-ui');
-let { Colors, Spacing, Typography } = Styles;
-let { StylePropable } = Mixins;
+import React from 'react';
+import Router from 'react-router';
+import { MenuItem, LeftNav, Mixins, Styles } from 'material-ui';
+const { Colors, Spacing, Typography } = Styles;
+const { StylePropable } = Mixins;
 
-let menuItems = [
+const menuItems = [
     { route: 'get-started', text: 'Get Started' },
     { route: 'customization', text: 'Customization' },
     { route: 'components', text: 'Components' },
@@ -15,12 +15,18 @@ let menuItems = [
   ];
 
 
-let AppLeftNav = React.createClass({
+const AppLeftNav = React.createClass({
   mixins: [StylePropable],
-  
+
   contextTypes: {
     muiTheme: React.PropTypes.object,
     router: React.PropTypes.func,
+  },
+  
+  getInitialState () {
+    return {
+      leftNavOpen: false,
+    };
   },
 
   getStyles() {
@@ -49,7 +55,8 @@ let AppLeftNav = React.createClass({
       <LeftNav
         ref="leftNav"
         docked={false}
-        isInitiallyOpen={false}
+        open={this.state.leftNavOpen}
+        onChangeRequest={this._onLeftNavChangeRequest}
         header={header}
         menuItems={menuItems}
         selectedIndex={this._getSelectedIndex()}
@@ -58,7 +65,7 @@ let AppLeftNav = React.createClass({
   },
 
   toggle() {
-    this.refs.leftNav.toggle();
+    this.setState({leftNavOpen: !this.state.leftNavOpen});
   },
 
   _getSelectedIndex() {
@@ -70,15 +77,19 @@ let AppLeftNav = React.createClass({
     }
   },
 
+  _onLeftNavChangeRequest(open) {
+    this.setState({leftNavOpen: open});
+  },
+
   _onLeftNavChange(e, key, payload) {
     this.props.history.pushState(null, payload.route);
   },
 
   _onHeaderClick() {
     this.props.history.pushState(null, '/');
-    this.refs.leftNav.close();
+    this.setState({leftNavOpen: false});
   },
-  
+
 });
 
 module.exports = AppLeftNav;

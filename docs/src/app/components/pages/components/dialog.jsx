@@ -1,9 +1,9 @@
-const React = require('react');
-const { Dialog, FlatButton, RaisedButton, Paper, Toggle } = require('material-ui');
-const ComponentDoc = require('../../component-doc');
-const Code = require('dialog-code');
-const CodeExample = require('../../code-example/code-example');
-const CodeBlock = require('../../code-example/code-block');
+import React from 'react';
+import { Dialog, FlatButton, RaisedButton, Paper, Toggle } from 'material-ui';
+import ComponentDoc from '../../component-doc';
+import Code from 'dialog-code';
+import CodeExample from '../../code-example/code-example';
+import CodeBlock from '../../code-example/code-block';
 
 export default class DialogPage extends React.Component {
 
@@ -194,7 +194,7 @@ export default class DialogPage extends React.Component {
         <Paper style = {{marginBottom: '22px'}}>
           <CodeBlock>
           {
-            '//Import statement:\nconst Dialog = require(\'material-ui/lib/dialog\');\n\n' +
+            '//Import statement:\nimport Dialog from \'material-ui/lib/dialog\';\n\n' +
             '//See material-ui/lib/index.js for more\n'
           }
           </CodeBlock>
@@ -212,6 +212,7 @@ export default class DialogPage extends React.Component {
             title="Dialog With Standard Actions"
             actions={standardActions}
             actionFocus="submit"
+            modal={this.state.modal}
             open={this.state.openDialogStandardActions}
             onRequestClose={this._handleRequestClose}>
             The actions in this window are created from the json that&#39;s passed in.
@@ -221,6 +222,7 @@ export default class DialogPage extends React.Component {
             ref="customDialog"
             title="Dialog With Custom Actions"
             actions={customActions}
+            modal={this.state.modal}
             open={this.state.openDialogCustomActions}
             onRequestClose={this._handleRequestClose}>
             The actions in this window were passed in as an array of react objects.
@@ -235,6 +237,7 @@ export default class DialogPage extends React.Component {
             ref="scrollableContentDialog"
             title="Dialog With Scrollable Content"
             actions={scrollableCustomActions}
+            modal={this.state.modal}
             autoDetectWindowHeight={true}
             autoScrollBodyContent={true}
             open={this.state.openDialogScrollable}
